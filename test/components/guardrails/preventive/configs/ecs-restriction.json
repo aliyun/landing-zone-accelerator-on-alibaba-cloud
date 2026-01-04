@@ -1,0 +1,28 @@
+{
+  "name": "ECS-Restriction",
+  "description": "Restrict ECS operations to specific regions",
+  "policy_document": {
+    "Version": "1",
+    "Statement": [
+      {
+        "Effect": "Deny",
+        "Action": [
+          "ecs:CreateInstance",
+          "ecs:RunInstances"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringNotEquals": {
+            "ecs:Region": ["cn-shanghai", "cn-beijing"]
+          }
+        }
+      }
+    ]
+  },
+  "tags": {
+    "Environment": "production",
+    "Project": "landing-zone"
+  },
+  "target_folder_names": ["Backend-Prod"],
+  "target_account_display_names": ["Test Network Account"]
+}

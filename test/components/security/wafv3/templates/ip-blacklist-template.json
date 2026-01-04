@@ -1,0 +1,8 @@
+{
+  "template_name": "test-template-dir",
+  "description": "Test defense template by dir",
+  "defense_scene": "ip_blacklist",
+  "template_type": "user_custom",
+  "template_origin": "custom",
+  "status": 1
+}

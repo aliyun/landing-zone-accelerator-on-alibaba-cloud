@@ -1,0 +1,6 @@
+name: Billing
+description: Grants permissions for billing and cost management. This includes viewing account usage and viewing and modifying budgets and payment methods.
+session_duration: 3600
+managed_system_policies:
+  - AliyunFinanceConsoleFullAccess
+  - AliyunBSSFullAccess

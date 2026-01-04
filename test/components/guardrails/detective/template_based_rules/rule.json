@@ -1,0 +1,37 @@
+[
+  {
+    "rule_name": "ECSInstanceNoPublicIP-dir",
+    "description": "Ensure ECS instances do not have public IP addresses",
+    "source_template_id": "ecs-instance-no-public-ip",
+    "maximum_execution_frequency": "One_Hour",
+    "scope_compliance_resource_types": ["ACS::ECS::Instance"],
+    "add_to_compliance_pack": true
+  },
+  {
+    "rule_name": "OSSBucketPublicReadProhibited-dir",
+    "description": "Ensure OSS buckets do not allow public read",
+    "source_template_id": "oss-bucket-public-read-prohibited",
+    "maximum_execution_frequency": "Six_Hours",
+    "scope_compliance_resource_types": ["ACS::OSS::Bucket"],
+    "risk_level": 2,
+    "trigger_types": "ScheduledNotification",
+    "add_to_compliance_pack": true
+  },
+  {
+    "rule_name": "ActionTrailEnabled-dir",
+    "description": "Ensure ActionTrail is enabled for audit logging",
+    "source_template_id": "actiontrail-enabled",
+    "scope_compliance_resource_types": ["ACS::ActionTrail::Trail"],
+    "trigger_types": "ScheduledNotification",
+    "add_to_compliance_pack": false
+  },
+  {
+    "rule_name": "OSSBucketVersioningEnabled-dir",
+    "description": "Ensure OSS bucket versioning is enabled",
+    "source_template_id": "oss-bucket-versioning-enabled",
+    "scope_compliance_resource_types": ["ACS::OSS::Bucket"],
+    "trigger_types": "ScheduledNotification",
+    "risk_level": 2,
+    "add_to_compliance_pack": false
+  }
+]

@@ -1,0 +1,20 @@
+name: Iam
+description: Provides full access to identity and access management.
+session_duration: 3600
+managed_system_policies:
+  - AliyunRAMFullAccess
+  - AliyunCloudSSOFullAccess
+inline_custom_policy:
+  policy_document:
+    Version: "1"
+    Statement:
+      - Effect: Allow
+        Action:
+          - resourcemanager:GetResourceDirectory
+          - governance:GetResourceStructureBlueprint
+          - governance:*SamlProvider
+          - governance:GetIamRole
+          - governance:ListIamRoles
+          - governance:*RoleBasedSsoBlueprint
+          - governance:*CloudSsoBlueprint
+        Resource: "*"

@@ -1,0 +1,16 @@
+name: RegexMatchFolderPolicy
+description: Policy matching folders by regex
+policy_document:
+  Version: "1"
+  Statement:
+    - Effect: Deny
+      Action:
+        - rds:DeleteDBInstance
+      Resource: "*"
+tags:
+  Environment: test
+  Project: "landing-zone"
+target_folder_name_regexes:
+  - "^API-Gateway-.*"
+  - "^User-Service-.*"
+

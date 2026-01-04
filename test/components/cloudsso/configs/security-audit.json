@@ -1,0 +1,17 @@
+{
+  "name": "SecurityAudit",
+  "description": "Grants access to read security configuration metadata.",
+  "session_duration": 3600,
+  "managed_system_policies": [
+    "AliyunYundunHighReadOnlyAccess",
+    "AliyunYundunAegisReadOnlyAccess",
+    "AliyunYundunSASReadOnlyAccess",
+    "AliyunYundunBastionHostReadOnlyAccess",
+    "AliyunYundunCertReadOnlyAccess",
+    "AliyunYundunDDosReadOnlyAccess",
+    "AliyunYundunWAFReadOnlyAccess",
+    "AliyunYundunDbAuditReadOnlyAccess",
+    "AliyunYundunCloudFirewallReadOnlyAccess",
+    "AliyunYundunIdaasReadOnlyAccess"
+  ]
+}

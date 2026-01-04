@@ -1,0 +1,34 @@
+{
+  "name": "NetworkAdministrator",
+  "description": "Grants full access permissions to Alibaba Cloud services and actions required to set up and configure Alibaba Cloud network resources.",
+  "session_duration": 3600,
+  "managed_system_policies": [
+    "AliyunVPCFullAccess",
+    "AliyunNATGatewayFullAccess",
+    "AliyunEIPFullAccess",
+    "AliyunCENFullAccess",
+    "AliyunVPNGatewayFullAccess",
+    "AliyunSLBFullAccess",
+    "AliyunExpressConnectFullAccess",
+    "AliyunCommonBandwidthPackageFullAccess",
+    "AliyunSmartAccessGatewayFullAccess",
+    "AliyunGlobalAccelerationFullAccess",
+    "AliyunECSNetworkInterfaceManagementAccess",
+    "AliyunDNSFullAccess",
+    "AliyunCDNFullAccess",
+    "AliyunYundunNewBGPAntiDDoSServicePROFullAccess"
+  ],
+  "inline_custom_policy": {
+    "policy_name": "NetworkAdmin-InlinePolicy",
+    "policy_document": {
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": "ecs:*SecurityGroup*",
+          "Resource": "*"
+        }
+      ],
+      "Version": "1"
+    }
+  }
+}

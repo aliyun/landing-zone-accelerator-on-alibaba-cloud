@@ -1,0 +1,41 @@
+Landing Zone Accelerator on Alibaba Cloud
+
+Copyright [2025] [Alibaba Cloud]. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except
+in compliance with the License. A copy of the License is located at http://www.apache.org/licenses/LICENSE-2.0
+or in the "LICENSE" file accompanying this file. This file is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
+
+**********************
+THIRD PARTY COMPONENTS
+**********************
+
+This software uses the following third-party tools and services:
+
+- Terraform (HashiCorp)
+  https://github.com/hashicorp/terraform
+  License: BSL 1.1 (since August 10, 2023)
+  Note: HashiCorp changed Terraform's license from MPL 2.0 to BSL 1.1 on August 10, 2023.
+        Versions released before August 10, 2023 are licensed under MPL 2.0.
+        BSL 1.1 allows free use for non-commercial purposes but restricts commercial
+        use in competitive services. Please review BSL 1.1 terms before commercial use.
+
+- OpenTofu (Linux Foundation) - Alternative to Terraform
+  https://github.com/opentofu/opentofu
+  License: MPL 2.0
+  Note: OpenTofu is a community fork of Terraform that continues under MPL 2.0 license.
+        It is fully compatible with Terraform and can be used as a drop-in replacement.
+
+- Alibaba Cloud Terraform Provider
+  https://github.com/aliyun/terraform-provider-alicloud
+  License: MPL 2.0
+
+IMPORTANT NOTES:
+- This project does NOT include or distribute Terraform or OpenTofu binaries.
+- Users must install Terraform or OpenTofu separately to use this project.
+- This project contains only Terraform configuration files (HCL code).
+- Users are responsible for ensuring their use of Terraform complies with applicable licenses.
+- For commercial use, consider using OpenTofu (MPL 2.0) or review HashiCorp's BSL 1.1 terms.
+

@@ -1,0 +1,9 @@
+{
+  "rule_name": "ip-blacklist-rule-dir",
+  "defense_scene": "ip_blacklist",
+  "template_id": "test-template-dir",
+  "rule_action": "monitor",
+  "remote_addr": ["3.3.3.3", "4.4.4.4"],
+  "status": 1,
+  "defense_origin": "custom"
+}

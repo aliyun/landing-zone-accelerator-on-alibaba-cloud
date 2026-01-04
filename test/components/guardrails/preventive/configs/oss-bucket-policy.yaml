@@ -1,0 +1,14 @@
+name: OSS-Bucket-Policy
+policy_document:
+  Version: "1"
+  Statement:
+    - Effect: Deny
+      Action:
+        - oss:DeleteBucket
+        - oss:PutBucketAcl
+      Resource: "*"
+      Condition:
+        StringNotEquals:
+          "oss:ResourceTag/Environment": ["Production"]
+target_ids:
+  - "fd-xxxxx"

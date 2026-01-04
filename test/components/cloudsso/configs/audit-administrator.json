@@ -1,0 +1,40 @@
+{
+  "name": "AuditAdministrator",
+  "description": "Provides full access to audit management.",
+  "session_duration": 3600,
+  "managed_system_policies": [
+    "AliyunConfigFullAccess",
+    "AliyunActionTrailFullAccess",
+    "AliyunLogFullAccess"
+  ],
+  "inline_custom_policy": {
+    "policy_document": {
+      "Version": "1",
+      "Statement": [
+        {
+          "Action": [
+            "*:Describe*",
+            "*:List*",
+            "*:Get*",
+            "*:BatchGet*",
+            "*:Query*",
+            "*:BatchQuery*",
+            "actiontrail:LookupEvents",
+            "dm:Desc*",
+            "dm:SenderStatistics*"
+          ],
+          "Resource": "*",
+          "Effect": "Allow"
+        },
+        {
+          "Action": [
+            "bss:*",
+            "efc:*"
+          ],
+          "Effect": "Deny",
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+}

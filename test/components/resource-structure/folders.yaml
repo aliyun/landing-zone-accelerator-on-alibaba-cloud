@@ -1,0 +1,73 @@
+- folder_name: Core
+  level: 1
+- folder_name: Production
+  level: 1
+- folder_name: Development
+  level: 1
+- folder_name: Testing
+  level: 1
+
+- folder_name: Web-Services-Prod
+  parent_folder_name: Production
+  level: 2
+  tags:
+    Service: Web
+    Environment: Production
+- folder_name: Database-Services
+  parent_folder_name: Production
+  level: 2
+  tags:
+    Service: Database
+    Environment: Production
+- folder_name: Web-Services-Dev
+  parent_folder_name: Development
+  level: 2
+  tags:
+    Service: Web
+    Environment: Development
+- folder_name: Web-Services-Test
+  parent_folder_name: Testing
+  level: 2
+  tags:
+    Service: Web
+    Environment: Testing
+
+- folder_name: Frontend-Prod
+  parent_folder_name: Web-Services-Prod
+  level: 3
+- folder_name: Backend-Prod
+  parent_folder_name: Web-Services-Prod
+  level: 3
+- folder_name: Frontend-Dev
+  parent_folder_name: Web-Services-Dev
+  level: 3
+- folder_name: Backend-Dev
+  parent_folder_name: Web-Services-Dev
+  level: 3
+
+- folder_name: API-Gateway-Prod
+  parent_folder_name: Backend-Prod
+  level: 4
+- folder_name: Microservices-Prod
+  parent_folder_name: Backend-Prod
+  level: 4
+- folder_name: API-Gateway-Dev
+  parent_folder_name: Backend-Dev
+  level: 4
+- folder_name: Microservices-Dev
+  parent_folder_name: Backend-Dev
+  level: 4
+
+- folder_name: User-Service-Prod
+  parent_folder_name: Microservices-Prod
+  level: 5
+- folder_name: Order-Service-Prod
+  parent_folder_name: Microservices-Prod
+  level: 5
+- folder_name: User-Service-Dev
+  parent_folder_name: Microservices-Dev
+  level: 5
+- folder_name: Order-Service-Dev
+  parent_folder_name: Microservices-Dev
+  level: 5
+

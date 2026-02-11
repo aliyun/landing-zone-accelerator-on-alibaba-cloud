@@ -19,14 +19,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -46,7 +46,7 @@
 module "cloudsso_users_groups" {
   source = "./modules/cloudsso-users-and-groups"
 
-  directory_id = "d-1234567890abcdef0"
+  directory_id = "d-2ze0xxxxxxxxxxxxxxxx"
   
   users = [
     {
@@ -120,7 +120,7 @@ module "cloudsso_users_groups" {
 module "cloudsso_users_groups" {
   source = "./modules/cloudsso-users-and-groups"
 
-  directory_id = "d-1234567890abcdef0"
+  directory_id = "d-2ze0xxxxxxxxxxxxxxxx"
   
   users = [
     {
@@ -147,7 +147,7 @@ module "cloudsso_users_groups" {
 module "cloudsso_users_groups" {
   source = "./modules/cloudsso-users-and-groups"
 
-  directory_id = "d-1234567890abcdef0"
+  directory_id = "d-2ze0xxxxxxxxxxxxxxxx"
   
   users = [
     {
@@ -183,7 +183,7 @@ module "cloudsso_users_groups" {
 module "cloudsso_users_groups" {
   source = "./modules/cloudsso-users-and-groups"
 
-  directory_id = "d-1234567890abcdef0"
+  directory_id = "d-2ze0xxxxxxxxxxxxxxxx"
   
   users = [
     {

@@ -1,0 +1,65 @@
+- description: "Allow HTTPS traffic from any source"
+  source: "0.0.0.0/0"
+  destination: "0.0.0.0/0"
+  proto: "TCP"
+  dest_port: "443/443"
+  acl_action: "accept"
+  source_type: "net"
+  destination_type: "net"
+  application_name_list:
+    - "HTTPS"
+  ip_version: 4
+
+- description: "Allow HTTP traffic with domain destination"
+  source: "203.0.113.0/24"
+  destination: "example.com"
+  proto: "TCP"
+  dest_port: "80/80"
+  acl_action: "accept"
+  source_type: "net"
+  destination_type: "domain"
+  application_name_list:
+    - "HTTP"
+  domain_resolve_type: 0
+  ip_version: 4
+
+- description: "Block SSH from specific network"
+  source: "198.51.100.0/24"
+  destination: "10.1.0.0/16"
+  proto: "TCP"
+  dest_port: "22/22"
+  acl_action: "drop"
+  source_type: "net"
+  destination_type: "net"
+  application_name_list:
+    - "SSH"
+  ip_version: 4
+
+- description: "Allow traffic with Daily repeat schedule"
+  source: "0.0.0.0/0"
+  destination: "10.2.0.0/16"
+  proto: "TCP"
+  dest_port: "8080/8080"
+  acl_action: "accept"
+  source_type: "net"
+  destination_type: "net"
+  application_name_list:
+    - "ANY"
+  repeat_type: "Daily"
+  repeat_start_time: "08:00"
+  repeat_end_time: "23:30"
+  start_time: 1704067200
+  end_time: 1704153600
+  ip_version: 4
+
+- description: "Allow traffic from address book group"
+  source: "test-ip-address-book"
+  destination: "10.7.0.0/16"
+  proto: "TCP"
+  dest_port: "8080/8080"
+  acl_action: "accept"
+  source_type: "group"
+  destination_type: "net"
+  application_name_list:
+    - "ANY"
+  ip_version: 4

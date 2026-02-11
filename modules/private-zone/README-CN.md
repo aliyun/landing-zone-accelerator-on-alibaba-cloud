@@ -19,14 +19,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -54,7 +54,7 @@ module "private_zone" {
   
   vpc_bindings = [
     {
-      vpc_id    = "vpc-1234567890abcdef0"
+      vpc_id    = "vpc-uf6v10ktt3tnxxxxxxxx"
       region_id = "cn-hangzhou"
     }
   ]
@@ -81,7 +81,7 @@ module "private_zone" {
 | `lang` | 解析域语言 | `string` | `"en"` | 否 | 必须为 `"zh"` 或 `"en"` |
 | `resource_group_id` | 解析域所属的资源组 ID | `string` | `""` | 否 | - |
 | `tags` | 解析域的标签 | `map(string)` | `{}` | 否 | - |
-| `vpc_bindings` | VPC 绑定列表，定义解析域生效范围 | `list(object)` | - | 是 | 每个对象包含 `vpc_id`（必填）和 `region_id`（可选） |
+| `vpc_bindings` | VPC 绑定列表，定义解析域生效范围 | `list(object)` | `[]` | 否 | 每个对象包含 `vpc_id`（必填）和 `region_id`（可选） |
 | `record_entries` | DNS 记录配置 | `list(object)` | `[]` | 否 | 见下方记录对象结构说明 |
 
 ### 记录对象结构

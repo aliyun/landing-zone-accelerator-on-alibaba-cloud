@@ -1,0 +1,26 @@
+# Beijing Transit Router route policies (array format)
+# Multiple policies covering different scenarios
+
+# Policy 1: CCN route filtering
+- transmit_direction: RegionIn
+  priority: 15
+  map_result: Permit
+  description: Allow routes from CCN with preference 100
+  source_child_instance_types:
+    - CCN
+  route_types:
+    - System
+  preference: 100
+
+# Policy 2: Deny specific CIDR blocks for VPC
+- transmit_direction: RegionOut
+  priority: 25
+  map_result: Deny
+  description: Deny private CIDR blocks to VPC
+  destination_child_instance_types:
+    - VPC
+  destination_cidr_blocks:
+    - 192.168.0.0/16
+    - 10.0.0.0/8
+  cidr_match_mode: Complete
+

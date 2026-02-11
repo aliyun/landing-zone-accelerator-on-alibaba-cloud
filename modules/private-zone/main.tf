@@ -17,6 +17,7 @@ resource "alicloud_pvtz_zone" "this" {
 
 # Bind VPCs to Private Zone
 resource "alicloud_pvtz_zone_attachment" "this" {
+  count   = length(var.vpc_bindings) > 0 ? 1 : 0
   zone_id = alicloud_pvtz_zone.this.id
   dynamic "vpcs" {
     for_each = var.vpc_bindings

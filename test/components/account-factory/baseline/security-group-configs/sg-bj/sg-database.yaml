@@ -1,0 +1,18 @@
+security_group_name: sg-database
+description: Security group for database servers in Beijing
+inner_access_policy: Accept
+security_group_type: normal
+tags:
+  Environment: test
+  Project: landing-zone
+  Region: Beijing
+rules:
+  - type: ingress
+    ip_protocol: tcp
+    policy: accept
+    priority: 1
+    cidr_ip: 10.0.0.0/8
+    port_range: 3306/3306
+    nic_type: intranet
+    description: Allow MySQL from VPC
+

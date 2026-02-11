@@ -15,19 +15,22 @@ resource "alicloud_vpc" "this" {
 
 # Create VSwitches
 resource "alicloud_vswitch" "this" {
-  count                = length(var.vswitches)
+  for_each = {
+    for vsw in var.vswitches :
+    vsw.cidr_block => vsw
+  }
+
   vpc_id               = alicloud_vpc.this.id
-  cidr_block           = var.vswitches[count.index].cidr_block
-  zone_id              = var.vswitches[count.index].zone_id
-  vswitch_name         = try(var.vswitches[count.index].vswitch_name, null)
-  description          = try(var.vswitches[count.index].description, null)
-  enable_ipv6          = try(var.vswitches[count.index].enable_ipv6, null)
-  ipv6_cidr_block_mask = try(var.vswitches[count.index].ipv6_cidr_block_mask, null)
-  # Inherit VPC tags if vswitch tags are not specified
+  cidr_block           = each.value.cidr_block
+  zone_id              = each.value.zone_id
+  vswitch_name         = try(each.value.vswitch_name, null)
+  description          = try(each.value.description, null)
+  enable_ipv6          = try(each.value.enable_ipv6, null)
+  ipv6_cidr_block_mask = try(each.value.ipv6_cidr_block_mask, null)
   tags = (
-    var.vswitches[count.index].tags == null ? alicloud_vpc.this.tags :
-    length(var.vswitches[count.index].tags) == 0 ? alicloud_vpc.this.tags :
-    var.vswitches[count.index].tags
+    each.value.tags == null ? alicloud_vpc.this.tags :
+    length(each.value.tags) == 0 ? alicloud_vpc.this.tags :
+    each.value.tags
   )
 }
 
@@ -77,4 +80,17 @@ resource "alicloud_network_acl" "this" {
       resource_type = "VSwitch"
     }
   }
+}
+
+# Query system route table
+data "alicloud_route_tables" "system_route_table" {
+  vpc_id = alicloud_vpc.this.id
+}
+
+locals {
+  system_route_table_id_list = [
+    for rt in try(data.alicloud_route_tables.system_route_table.tables, []) : rt.id
+    if rt.route_table_type == "System"
+  ]
+  system_route_table_id = try(local.system_route_table_id_list[0], null)
 }

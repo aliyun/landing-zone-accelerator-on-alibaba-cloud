@@ -1,8 +1,9 @@
 # Get current account information
 data "alicloud_account" "current" {}
 
-# Create Resource Directory
+# Create Resource Directory (only if not using existing)
 resource "alicloud_resource_manager_resource_directory" "default" {
+  count  = var.use_existing_resource_directory ? 0 : 1
   status = "Enabled"
 }
 

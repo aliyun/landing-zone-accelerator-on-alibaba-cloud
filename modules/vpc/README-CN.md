@@ -21,14 +21,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -41,6 +41,7 @@
 | [alicloud_vpc.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vpc) | resource | 专有网络 |
 | [alicloud_vswitch.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vswitch) | resource | 交换机（一个或多个） |
 | [alicloud_network_acl.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/network_acl) | resource | 网络 ACL（可选） |
+| [alicloud_route_tables.system_route_table](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/route_tables) | data source | 系统路由表查询 |
 
 ## 使用方法
 
@@ -127,7 +128,10 @@ module "vpc" {
 | 参数名 | 说明 |
 |--------|------|
 | `vpc_id` | VPC ID |
+| `route_table_id` | VPC 路由表 ID |
+| `system_route_table_id` | 系统路由表 ID |
 | `vswitch_ids` | 所有交换机 ID 列表 |
+| `vswitchs` | 所有交换机详细信息列表（包含 id、cidr_block、zone_id、vswitch_name、description、enable_ipv6、ipv6_cidr_block、status、tags） |
 | `network_acl_id` | VPC ACL ID（如果启用） |
 
 ## 使用示例

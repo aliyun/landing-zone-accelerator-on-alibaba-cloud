@@ -20,14 +20,14 @@ This component creates and manages Alibaba Cloud Web Application Firewall v3 (WA
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 

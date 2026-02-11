@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    alicloud = {
-      source  = "hashicorp/alicloud"
-      version = "~> 1.262.1"
-    }
-  }
-}
-
 # Provider configuration
 provider "alicloud" {
   region = "cn-hangzhou"

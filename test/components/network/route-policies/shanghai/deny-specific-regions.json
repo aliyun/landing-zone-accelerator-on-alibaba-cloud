@@ -1,0 +1,13 @@
+[
+  {
+    "transmit_direction": "RegionIn",
+    "priority": 25,
+    "map_result": "Deny",
+    "description": "拒绝来自指定地域的路由",
+    "source_region_ids": [
+      "eu-central-1",
+      "eu-west-1"
+    ]
+  }
+]
+

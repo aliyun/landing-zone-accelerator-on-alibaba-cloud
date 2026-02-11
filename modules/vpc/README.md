@@ -21,14 +21,14 @@ This module creates and manages Alibaba Cloud Virtual Private Cloud (VPC) resour
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -41,6 +41,7 @@ No modules.
 | [alicloud_vpc.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vpc) | resource | Virtual Private Cloud |
 | [alicloud_vswitch.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vswitch) | resource | VSwitches (one or more) |
 | [alicloud_network_acl.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/network_acl) | resource | Network ACL (optional) |
+| [alicloud_route_tables.system_route_table](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/route_tables) | data source | System route table lookup |
 
 ## Usage
 
@@ -127,7 +128,10 @@ Each entry in `ingress_acl_entries` or `egress_acl_entries` must have the follow
 | Name | Description |
 |------|-------------|
 | `vpc_id` | The ID of the VPC |
+| `route_table_id` | The ID of the VPC route table |
+| `system_route_table_id` | The ID of the system route table |
 | `vswitch_ids` | List of all VSwitch IDs |
+| `vswitchs` | List of all VSwitches with detailed information (id, cidr_block, zone_id, vswitch_name, description, enable_ipv6, ipv6_cidr_block, status, tags) |
 | `network_acl_id` | The ID of the VPC ACL (if enabled) |
 
 ## Examples

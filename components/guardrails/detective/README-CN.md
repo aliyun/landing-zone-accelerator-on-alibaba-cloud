@@ -21,14 +21,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -171,7 +171,7 @@ module "detective_guardrails" {
   source = "./components/guardrails/detective"
 
   use_existing_aggregator = true
-  existing_aggregator_id  = "ca-xxxxxxxxxxxxxxxxx"
+  existing_aggregator_id  = "ca-2ze0xxxxxxxxxxxxxxxxx"
   
   enable_compliance_pack = true
   template_based_rules = [
@@ -195,7 +195,7 @@ module "detective_guardrails" {
   
   aggregator_accounts = [
     {
-      account_id   = "123456789012"
+      account_id   = "<ACCOUNT_ID>"
       account_name = "account-1"
     }
   ]

@@ -21,14 +21,14 @@ This component creates functional accounts in the Resource Directory and configu
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -48,8 +48,8 @@ No modules.
 module "accounts" {
   source = "./components/resource-structure/accounts"
 
-  resource_directory_id = "rd-xxxxx"
-  default_folder_id     = "fd-xxxxx"
+  resource_directory_id = "rd-2ze0xxxxxxxxxxxxxxxx"
+  default_folder_id     = "fd-2ze0xxxxxxxxxxxxxxxx"
 
   account_mapping = {
     log = {
@@ -65,7 +65,7 @@ module "accounts" {
       account_name_prefix = "security"
       display_name        = "Security Account"
       billing_type        = "Self-pay"
-      folder_id           = "fd-yyyyy"
+      folder_id           = "fd-2ze0xxxxxxxxxxxxxxxx"
       tags                = {
         Environment = "Production"
         Team        = "Security"
@@ -160,8 +160,8 @@ Includes delegation for security, log, operations, and identity services. See va
 module "accounts" {
   source = "./components/resource-structure/accounts"
 
-  resource_directory_id = "rd-xxxxx"
-  default_folder_id     = "fd-xxxxx"
+  resource_directory_id = "rd-2ze0xxxxxxxxxxxxxxxx"
+  default_folder_id     = "fd-2ze0xxxxxxxxxxxxxxxx"
 
   account_mapping = {
     log = {
@@ -180,8 +180,8 @@ module "accounts" {
 module "accounts" {
   source = "./components/resource-structure/accounts"
 
-  resource_directory_id = "rd-xxxxx"
-  default_folder_id     = "fd-xxxxx"
+  resource_directory_id = "rd-2ze0xxxxxxxxxxxxxxxx"
+  default_folder_id     = "fd-2ze0xxxxxxxxxxxxxxxx"
 
   account_mapping = {
     "log,security" = {
@@ -203,8 +203,8 @@ module "accounts" {
 module "accounts" {
   source = "./components/resource-structure/accounts"
 
-  resource_directory_id = "rd-xxxxx"
-  default_folder_id     = "fd-xxxxx"
+  resource_directory_id = "rd-2ze0xxxxxxxxxxxxxxxx"
+  default_folder_id     = "fd-2ze0xxxxxxxxxxxxxxxx"
 
   account_mapping = {
     security = {
@@ -232,15 +232,15 @@ module "accounts" {
 module "accounts" {
   source = "./components/resource-structure/accounts"
 
-  resource_directory_id = "rd-xxxxx"
-  default_folder_id     = "fd-xxxxx"
+  resource_directory_id = "rd-2ze0xxxxxxxxxxxxxxxx"
+  default_folder_id     = "fd-2ze0xxxxxxxxxxxxxxxx"
 
   account_mapping = {
     log = {
       account_name_prefix = "log"
       display_name        = "log"
       billing_type        = "Trusteeship"
-      billing_account_id = "123456789012"
+      billing_account_id = "<ACCOUNT_ID>"
       tags                = {}
     }
   }
@@ -253,14 +253,14 @@ module "accounts" {
 module "accounts" {
   source = "./components/resource-structure/accounts"
 
-  resource_directory_id = "rd-xxxxx"
+  resource_directory_id = "rd-2ze0xxxxxxxxxxxxxxxx"
 
   account_mapping = {
     log = {
       account_name_prefix = "log"
       display_name        = "log"
       billing_type        = "Self-pay"
-      folder_id           = "fd-xxxxx"
+      folder_id           = "fd-2ze0xxxxxxxxxxxxxxxx"
       tags                = {
         Environment = "Production"
         Team        = "Platform"
@@ -270,7 +270,7 @@ module "accounts" {
       account_name_prefix = "security"
       display_name        = "security"
       billing_type        = "Self-pay"
-      folder_id           = "fd-yyyyy"
+      folder_id           = "fd-2ze0xxxxxxxxxxxxxxxx"
       tags                = {
         Environment = "Production"
         Team        = "Security"

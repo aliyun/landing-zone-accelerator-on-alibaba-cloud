@@ -20,16 +20,16 @@ This module configures internet egress routing from a VPC through a DMZ VPC usin
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
-| alicloud.dmz | >= 1.262.1 |
-| alicloud.vpc | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
+| alicloud.dmz | >= 1.267.0 |
+| alicloud.vpc | >= 1.267.0 |
 
 ## Modules
 
@@ -52,14 +52,14 @@ No modules.
 module "dmz_vpc_egress" {
   source = "./modules/dmz-vpc-egress"
 
-  vpc_id                = "vpc-1234567890abcdef0"
-  vpc_tr_attachment_id = "tr-attach-1234567890abcdef0"
-  cidr_block           = "192.168.0.0/16"
+  vpc_id                = "vpc-uf6v10ktt3tnxxxxxxxx"
+  vpc_tr_attachment_id = "tr-attach-2ze0xxxxxxxxxxxxxxxx"
+  vpc_cidr_block       = "192.168.0.0/16"
   
-  dmz_vpc_id                = "vpc-dmz-1234567890abcdef0"
-  dmz_vpc_tr_attachment_id  = "tr-attach-dmz-1234567890abcdef0"
-  nat_gateway_id            = "ngw-1234567890abcdef0"
-  eip_addresses             = ["47.96.XX.XX", "47.96.XX.YY"]
+  dmz_vpc_id                = "vpc-dmz-2ze0xxxxxxxxxxxxxxxx"
+  dmz_vpc_tr_attachment_id  = "tr-attach-dmz-2ze0xxxxxxxxxxxxxxxx"
+  dmz_nat_gateway_id         = "ngw-uf6hg6eaaqz70xxxxxx"
+  dmz_eip_addresses         = ["47.96.XX.XX", "47.96.XX.YY"]
 }
 ```
 
@@ -68,15 +68,16 @@ module "dmz_vpc_egress" {
 | Name | Description | Type | Default | Required | Constraints |
 |------|-------------|------|---------|----------|-------------|
 | `vpc_id` | The ID of the VPC that requires internet egress | `string` | - | Yes | - |
-| `route_table_id` | The ID of the route table in the VPC | `string` | `null` | No | If not specified, system route table will be used |
+| `vpc_route_table_id` | The ID of the route table in the VPC | `string` | `null` | No | If not specified, system route table will be used |
 | `vpc_tr_attachment_id` | The ID of the VPC transit router attachment | `string` | - | Yes | - |
-| `cidr_block` | The CIDR block routed from VPC to DMZ | `string` | - | Yes | Valid IPv4 CIDR block |
+| `vpc_route_entry_destination_cidrblock` | The destination CIDR block for the VPC route entry | `string` | `"0.0.0.0/0"` | No | Valid IPv4 CIDR block. Defaults to 0.0.0.0/0 for Internet egress |
+| `vpc_cidr_block` | The CIDR block routed from VPC to DMZ | `string` | - | Yes | Valid IPv4 CIDR block |
 | `dmz_vpc_id` | The ID of the DMZ VPC | `string` | - | Yes | - |
 | `dmz_route_table_id` | The ID of the route table in the DMZ VPC | `string` | `null` | No | If not specified, system route table will be used |
 | `dmz_vpc_tr_attachment_id` | The ID of the DMZ VPC transit router attachment | `string` | - | Yes | - |
-| `nat_gateway_id` | The ID of the NAT Gateway in the DMZ VPC | `string` | - | Yes | - |
-| `snat_table_id` | The ID of the SNAT table | `string` | `null` | No | If not specified, first SNAT table will be used |
-| `eip_addresses` | List of EIP addresses for SNAT | `list(string)` | `[]` | No | Valid IPv4 addresses. If empty, uses EIPs associated with NAT Gateway |
+| `dmz_nat_gateway_id` | The ID of the NAT Gateway in the DMZ VPC | `string` | - | Yes | - |
+| `dmz_snat_table_id` | The ID of the SNAT table | `string` | `null` | No | If not specified, first SNAT table will be used |
+| `dmz_eip_addresses` | List of EIP addresses for SNAT | `list(string)` | `[]` | No | Valid IPv4 addresses. If empty, uses EIPs associated with NAT Gateway |
 
 ## Outputs
 
@@ -98,12 +99,12 @@ module "dmz_vpc_egress" {
 
   vpc_id                = "vpc-abc123"
   vpc_tr_attachment_id = "tr-attach-xyz789"
-  cidr_block           = "10.0.0.0/16"
+  vpc_cidr_block       = "10.0.0.0/16"
   
   dmz_vpc_id                = "vpc-dmz-abc123"
   dmz_vpc_tr_attachment_id  = "tr-attach-dmz-xyz789"
-  nat_gateway_id            = "ngw-abc123"
-  eip_addresses             = ["47.96.1.1", "47.96.1.2"]
+  dmz_nat_gateway_id         = "ngw-abc123"
+  dmz_eip_addresses         = ["47.96.1.1", "47.96.1.2"]
 }
 ```
 
@@ -115,12 +116,12 @@ module "dmz_vpc_egress" {
 
   vpc_id                = "vpc-abc123"
   vpc_tr_attachment_id = "tr-attach-xyz789"
-  cidr_block           = "10.0.0.0/16"
+  vpc_cidr_block       = "10.0.0.0/16"
   
   dmz_vpc_id                = "vpc-dmz-abc123"
   dmz_vpc_tr_attachment_id  = "tr-attach-dmz-xyz789"
-  nat_gateway_id            = "ngw-abc123"
-  # route_table_id and dmz_route_table_id not specified - will use system route tables
+  dmz_nat_gateway_id         = "ngw-abc123"
+  # vpc_route_table_id and dmz_route_table_id not specified - will use system route tables
 }
 ```
 
@@ -132,12 +133,12 @@ module "dmz_vpc_egress" {
 
   vpc_id                = "vpc-abc123"
   vpc_tr_attachment_id = "tr-attach-xyz789"
-  cidr_block           = "10.0.0.0/16"
+  vpc_cidr_block       = "10.0.0.0/16"
   
   dmz_vpc_id                = "vpc-dmz-abc123"
   dmz_vpc_tr_attachment_id  = "tr-attach-dmz-xyz789"
-  nat_gateway_id            = "ngw-abc123"
-  # eip_addresses not specified - will use EIPs associated with NAT Gateway
+  dmz_nat_gateway_id         = "ngw-abc123"
+  # dmz_eip_addresses not specified - will use EIPs associated with NAT Gateway
 }
 ```
 

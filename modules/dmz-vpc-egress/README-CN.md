@@ -20,16 +20,16 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
-| alicloud.dmz | >= 1.262.1 |
-| alicloud.vpc | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
+| alicloud.dmz | >= 1.267.0 |
+| alicloud.vpc | >= 1.267.0 |
 
 ## Modules
 
@@ -52,14 +52,14 @@
 module "dmz_vpc_egress" {
   source = "./modules/dmz-vpc-egress"
 
-  vpc_id                = "vpc-1234567890abcdef0"
-  vpc_tr_attachment_id = "tr-attach-1234567890abcdef0"
-  cidr_block           = "192.168.0.0/16"
+  vpc_id                = "vpc-uf6v10ktt3tnxxxxxxxx"
+  vpc_tr_attachment_id = "tr-attach-2ze0xxxxxxxxxxxxxxxx"
+  vpc_cidr_block       = "192.168.0.0/16"
   
-  dmz_vpc_id                = "vpc-dmz-1234567890abcdef0"
-  dmz_vpc_tr_attachment_id  = "tr-attach-dmz-1234567890abcdef0"
-  nat_gateway_id            = "ngw-1234567890abcdef0"
-  eip_addresses             = ["47.96.XX.XX", "47.96.XX.YY"]
+  dmz_vpc_id                = "vpc-dmz-2ze0xxxxxxxxxxxxxxxx"
+  dmz_vpc_tr_attachment_id  = "tr-attach-dmz-2ze0xxxxxxxxxxxxxxxx"
+  dmz_nat_gateway_id         = "ngw-uf6hg6eaaqz70xxxxxx"
+  dmz_eip_addresses         = ["47.96.XX.XX", "47.96.XX.YY"]
 }
 ```
 
@@ -68,15 +68,16 @@ module "dmz_vpc_egress" {
 | 参数名 | 说明 | 类型 | 默认值 | 必填 | 限制条件 |
 |--------|------|------|--------|------|----------|
 | `vpc_id` | 需要互联网出站的 VPC ID | `string` | - | 是 | - |
-| `route_table_id` | VPC 中的路由表 ID | `string` | `null` | 否 | 如果未指定，将使用系统路由表 |
+| `vpc_route_table_id` | VPC 中的路由表 ID | `string` | `null` | 否 | 如果未指定，将使用系统路由表 |
 | `vpc_tr_attachment_id` | VPC 转发路由器连接 ID | `string` | - | 是 | - |
-| `cidr_block` | 从 VPC 路由到 DMZ 的 CIDR 块 | `string` | - | 是 | 有效的 IPv4 CIDR 块 |
+| `vpc_route_entry_destination_cidrblock` | VPC 路由条目的目标 CIDR 块 | `string` | `"0.0.0.0/0"` | 否 | 有效的 IPv4 CIDR 块。默认为 0.0.0.0/0 用于互联网出站 |
+| `vpc_cidr_block` | 从 VPC 路由到 DMZ 的 CIDR 块 | `string` | - | 是 | 有效的 IPv4 CIDR 块 |
 | `dmz_vpc_id` | DMZ VPC ID | `string` | - | 是 | - |
 | `dmz_route_table_id` | DMZ VPC 中的路由表 ID | `string` | `null` | 否 | 如果未指定，将使用系统路由表 |
 | `dmz_vpc_tr_attachment_id` | DMZ VPC 转发路由器连接 ID | `string` | - | 是 | - |
-| `nat_gateway_id` | DMZ VPC 中的 NAT 网关 ID | `string` | - | 是 | - |
-| `snat_table_id` | SNAT 表 ID | `string` | `null` | 否 | 如果未指定，将使用第一个 SNAT 表 |
-| `eip_addresses` | 用于 SNAT 的 EIP 地址列表 | `list(string)` | `[]` | 否 | 有效的 IPv4 地址。如果为空，使用与 NAT 网关关联的 EIP |
+| `dmz_nat_gateway_id` | DMZ VPC 中的 NAT 网关 ID | `string` | - | 是 | - |
+| `dmz_snat_table_id` | SNAT 表 ID | `string` | `null` | 否 | 如果未指定，将使用第一个 SNAT 表 |
+| `dmz_eip_addresses` | 用于 SNAT 的 EIP 地址列表 | `list(string)` | `[]` | 否 | 有效的 IPv4 地址。如果为空，使用与 NAT 网关关联的 EIP |
 
 ## 输出参数
 
@@ -98,12 +99,12 @@ module "dmz_vpc_egress" {
 
   vpc_id                = "vpc-abc123"
   vpc_tr_attachment_id = "tr-attach-xyz789"
-  cidr_block           = "10.0.0.0/16"
+  vpc_cidr_block       = "10.0.0.0/16"
   
   dmz_vpc_id                = "vpc-dmz-abc123"
   dmz_vpc_tr_attachment_id  = "tr-attach-dmz-xyz789"
-  nat_gateway_id            = "ngw-abc123"
-  eip_addresses             = ["47.96.1.1", "47.96.1.2"]
+  dmz_nat_gateway_id         = "ngw-abc123"
+  dmz_eip_addresses         = ["47.96.1.1", "47.96.1.2"]
 }
 ```
 
@@ -115,12 +116,12 @@ module "dmz_vpc_egress" {
 
   vpc_id                = "vpc-abc123"
   vpc_tr_attachment_id = "tr-attach-xyz789"
-  cidr_block           = "10.0.0.0/16"
+  vpc_cidr_block       = "10.0.0.0/16"
   
   dmz_vpc_id                = "vpc-dmz-abc123"
   dmz_vpc_tr_attachment_id  = "tr-attach-dmz-xyz789"
-  nat_gateway_id            = "ngw-abc123"
-  # route_table_id 和 dmz_route_table_id 未指定 - 将使用系统路由表
+  dmz_nat_gateway_id         = "ngw-abc123"
+  # vpc_route_table_id 和 dmz_route_table_id 未指定 - 将使用系统路由表
 }
 ```
 
@@ -132,12 +133,12 @@ module "dmz_vpc_egress" {
 
   vpc_id                = "vpc-abc123"
   vpc_tr_attachment_id = "tr-attach-xyz789"
-  cidr_block           = "10.0.0.0/16"
+  vpc_cidr_block       = "10.0.0.0/16"
   
   dmz_vpc_id                = "vpc-dmz-abc123"
   dmz_vpc_tr_attachment_id  = "tr-attach-dmz-xyz789"
-  nat_gateway_id            = "ngw-abc123"
-  # eip_addresses 未指定 - 将使用与 NAT 网关关联的 EIP
+  dmz_nat_gateway_id         = "ngw-abc123"
+  # dmz_eip_addresses 未指定 - 将使用与 NAT 网关关联的 EIP
 }
 ```
 

@@ -1,0 +1,86 @@
+{
+    "region_id": "cn-shanghai",
+    "create_bastion_host": false,
+    "existing_bastionhost_instance_id": "bastionhost-cn-2104m34hxxxxx",
+    "bastionhost_description": null,
+    "bastionhost_license_code": null,
+    "bastionhost_plan_code": null,
+    "bastionhost_storage": null,
+    "bastionhost_bandwidth": null,
+    "bastionhost_period": null,
+    "bastion_vpc_id": null,
+    "bastionhost_vswitch_id": null,
+    "bastionhost_security_group_ids": [],
+    "bastionhost_slave_vswitch_id": null,
+    "bastionhost_tags": null,
+    "bastionhost_resource_group_id": null,
+    "bastionhost_enable_public_access": null,
+    "bastionhost_ad_auth_server": null,
+    "bastionhost_ldap_auth_server": null,
+    "bastionhost_renew_period": 1,
+    "bastionhost_renewal_status": null,
+    "bastionhost_renewal_period_unit": null,
+    "bastionhost_public_white_list": [],
+    "bastionhost_host_groups": [
+        {
+            "host_group_name": "group test2",
+            "comment": "Test Bastion Host Group"
+        }
+    ],
+    "bastionhost_hosts": [
+        {
+            "existing_host_id": "2",
+            "host_group_names": [
+                "group test"
+            ],
+            "host_accounts": [
+                {
+                    "protocol_name": "SSH",
+                    "host_account_name": "account3",
+                    "password": "123456"
+                }
+            ]
+        },
+        {
+            "host_config": {
+                "active_address_type": "Private",
+                "comment": "Test Bastion Host",
+                "host_name": "i-uf6ggvi9u6xxxxxxxxxx",
+                "host_private_address": "192.168.0.27",
+                "host_public_address": null,
+                "instance_region_id": "cn-shanghai",
+                "os_type": "Linux",
+                "source": "Ecs",
+                "source_instance_id": "i-uf6ggvi9u6xxxxxxxxxx"
+            },
+            "host_accounts": [
+                {
+                    "protocol_name": "SSH",
+                    "host_account_name": "account1",
+                    "password": "123456"
+                },
+                {
+                    "protocol_name": "SSH",
+                    "host_account_name": "account2",
+                    "password": "123456"
+                }
+            ]
+        },
+        {
+            "host_config": {
+                "active_address_type": "Private",
+                "comment": "Test Bastion Host",
+                "host_name": "i-disable-account",
+                "host_private_address": "172.19.240.70",
+                "host_public_address": null,
+                "instance_region_id": "cn-hangzhou",
+                "os_type": "Linux",
+                "source": "Ecs",
+                "source_instance_id": "i-uf6ggvi9u6xxxxxxxxxx"
+            },
+            "host_group_names": [
+                "group test2"
+            ]
+        }
+    ]
+}

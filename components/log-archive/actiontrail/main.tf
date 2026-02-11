@@ -3,10 +3,19 @@ data "alicloud_account" "current" {
   provider = alicloud.log_archive
 }
 
+data "alicloud_account" "oss" {
+  provider = alicloud.oss
+}
+
+data "alicloud_account" "sls" {
+  provider = alicloud.sls
+}
+
+
 # Generate default resource names for OSS bucket and SLS project
 locals {
-  oss_bucket_name  = try(var.oss_bucket_name, "actiontrail-${data.alicloud_account.current.id}")
-  sls_project_name = try(var.sls_project_name, "actiontrail-${data.alicloud_account.current.id}")
+  oss_bucket_name  = try(var.oss_bucket_name, "actiontrail-${data.alicloud_account.oss.id}")
+  sls_project_name = try(var.sls_project_name, "actiontrail-${data.alicloud_account.sls.id}")
 }
 
 # Enable required services
@@ -67,7 +76,7 @@ module "sls_project" {
 
 # Create ActionTrail trail with OSS and SLS delivery
 resource "alicloud_actiontrail_trail" "main" {
-  provider = alicloud.log_archive
+  provider              = alicloud.log_archive
   trail_name            = var.trail_name
   status                = var.trail_status
   event_rw              = var.event_type
@@ -76,13 +85,13 @@ resource "alicloud_actiontrail_trail" "main" {
 
   # Configure OSS delivery (optional)
   oss_write_role_arn = var.enable_oss_delivery ? (
-    var.oss_write_role_arn != null ? var.oss_write_role_arn : "acs:ram::${data.alicloud_account.current.id}:role/aliyunserviceroleforactiontrail"
+    var.oss_write_role_arn != null ? var.oss_write_role_arn : "acs:ram::${data.alicloud_account.oss.id}:role/aliyunserviceroleforactiontrail"
   ) : null
   oss_bucket_name = var.enable_oss_delivery ? module.oss_bucket[0].bucket : null
 
   # Configure SLS delivery (optional)
   sls_write_role_arn = var.enable_sls_delivery ? (
-    var.sls_write_role_arn != null ? var.sls_write_role_arn : "acs:ram::${data.alicloud_account.current.id}:role/aliyunserviceroleforactiontrail"
+    var.sls_write_role_arn != null ? var.sls_write_role_arn : "acs:ram::${data.alicloud_account.sls.id}:role/aliyunserviceroleforactiontrail"
   ) : null
   sls_project_arn = var.enable_sls_delivery ? module.sls_project[0].project_arn : null
 

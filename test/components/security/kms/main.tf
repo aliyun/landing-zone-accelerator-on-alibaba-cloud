@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    alicloud = {
-      source  = "hashicorp/alicloud"
-      version = "~> 1.262.1"
-    }
-  }
-}
-
 # Provider configuration
 provider "alicloud" {
   region = "cn-hangzhou"
@@ -25,23 +16,23 @@ module "kms" {
   vpc_cidr_block      = "10.0.0.0/8"
   vswitch_cidr_block  = "10.0.1.0/24"
   vswitch_name        = "test-kms-vswitch"
-  
+
   # Zone IDs configuration (first one will be used for VSwitch)
   zone_ids = ["cn-hangzhou-g", "cn-hangzhou-e"]
-  
+
   # Tags configuration
   vpc_tags = {
     Environment = "test"
     Project     = "landing-zone"
     Component   = "kms"
   }
-  
+
   vswitch_tags = {
     Environment = "test"
     Project     = "landing-zone"
     Component   = "kms-vswitch"
   }
-  
+
   kms_instance_tags = {
     Environment = "test"
     Project     = "landing-zone"

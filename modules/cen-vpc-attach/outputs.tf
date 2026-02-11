@@ -13,3 +13,8 @@ output "route_table_propagation_id" {
   value       = try(alicloud_cen_transit_router_route_table_propagation.route_table_propagation[0].id, null)
 }
 
+output "vpc_route_entry_ids" {
+  description = "List of VPC route entry IDs created for Transit Router attachment"
+  value       = [for entry in alicloud_route_entry.vpc_route_entry : entry.id]
+}
+

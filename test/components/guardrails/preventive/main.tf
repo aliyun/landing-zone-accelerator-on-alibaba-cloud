@@ -72,7 +72,7 @@ module "preventive_guardrails" {
         ]
       })
       description                  = "Policy with combined target types including regex"
-      target_ids                   = ["fd-xxxxx"]
+      target_ids                   = ["fd-2ze0xxxxxxxxxxxxxxxx"]
       target_folder_names          = ["Production"]
       target_folder_name_regexes   = ["^Web-Services-.*", "^Frontend-Prod-.*"]
       target_account_display_names = ["Test Log Management Account"]

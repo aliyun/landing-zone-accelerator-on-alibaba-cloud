@@ -1,0 +1,44 @@
+{
+    "region_id": "cn-shanghai",
+    "create_bastion_host": false,
+    "existing_bastionhost_instance_id": "bastionhost-cn-2104m34hxxxxx",
+    "bastionhost_description": null,
+    "bastionhost_license_code": null,
+    "bastionhost_plan_code": null,
+    "bastionhost_storage": null,
+    "bastionhost_bandwidth": null,
+    "bastionhost_period": null,
+    "bastion_vpc_id": null,
+    "bastionhost_vswitch_id": null,
+    "bastionhost_security_group_ids": [],
+    "bastionhost_slave_vswitch_id": null,
+    "bastionhost_tags": null,
+    "bastionhost_resource_group_id": null,
+    "bastionhost_enable_public_access": null,
+    "bastionhost_ad_auth_server": null,
+    "bastionhost_ldap_auth_server": null,
+    "bastionhost_renew_period": null,
+    "bastionhost_renewal_status": null,
+    "bastionhost_renewal_period_unit": null,
+    "bastionhost_public_white_list": [],
+    "bastionhost_host_groups": [
+        {
+            "host_group_name": "group test2",
+            "comment": "Test Bastion Host Group"
+        },
+        {
+            "host_group_name": "group yaml",
+            "comment": "Test Bastion Host Group"
+        }
+        ,
+        {
+            "host_group_name": "group json",
+            "comment": "Test Bastion Host Group"
+        }
+    ],
+    "bastionhost_hosts": [],
+    "host_file_paths": [],
+    "host_dir_paths": [
+        "/Users/sarah/landingzone-customers/bridgewater-landingzone/test/components/security/bastion-host/hosts_file_test/"
+    ]
+}

@@ -19,14 +19,14 @@ This module creates and manages Alibaba Cloud Key Management Service (KMS) insta
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -46,9 +46,9 @@ module "kms_instance" {
 
   instance_name   = "my-kms-instance"
   product_version = "3"
-  vpc_id          = "vpc-1234567890abcdef0"
+  vpc_id          = "vpc-uf6v10ktt3tnxxxxxxxx"
   zone_ids        = ["cn-hangzhou-h", "cn-hangzhou-i"]
-  vswitch_ids     = ["vsw-1234567890abcdef0"]
+  vswitch_ids     = ["vsw-uf62k55n02gqxxxxxxxx"]
   
   key_num = 1000
   spec    = "1000"

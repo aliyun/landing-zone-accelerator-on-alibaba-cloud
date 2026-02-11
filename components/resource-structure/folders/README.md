@@ -20,14 +20,14 @@ This component creates and manages Alibaba Cloud Resource Manager Resource Direc
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -88,6 +88,7 @@ module "folders" {
 |------|-------------|------|---------|----------|-------------|
 | `folder_structure` | List of folder configurations to create | `list(object)` | `[]` | No | Level 1-5, valid folder names, proper parent relationships |
 | `folder_structure_file_path` | Path to JSON/YAML file defining folder structure | `string` | `null` | No | Supports .json, .yaml, .yml |
+| `use_existing_resource_directory` | Whether to use an existing resource directory instead of creating a new one. When true, control policy must be manually enabled if not already enabled. | `bool` | `false` | No | - |
 
 ### folder_structure Object
 
@@ -185,7 +186,9 @@ module "folders" {
 
 ## Notes
 
-- Resource Directory is automatically created and enabled
+- Resource Directory is automatically created and enabled by default (when `use_existing_resource_directory` is `false`)
+- When `use_existing_resource_directory` is `true`, the component will use an existing resource directory and will not create a new one
+- **Important**: When creating a new resource directory, control policy is automatically enabled. If you use an existing resource directory (`use_existing_resource_directory = true`), you must manually ensure that control policy is enabled in the Alibaba Cloud console if it's not already enabled
 - Folders are created in hierarchical order (level 1 to 5)
 - Core folder is automatically created if not present in folder_structure
 - Folder names must be unique within the same level

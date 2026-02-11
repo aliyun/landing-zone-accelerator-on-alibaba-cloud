@@ -51,6 +51,7 @@ variable "vpc_bindings" {
     vpc_id    = string
     region_id = optional(string)
   }))
+  default = []
 }
 
 variable "record_entries" {
@@ -71,7 +72,7 @@ variable "record_entries" {
       for rec in var.record_entries : (
         (rec.lang == null || try(contains(["zh", "en"], rec.lang), false)) &&
         contains(["A", "CNAME", "TXT", "MX", "PTR", "SRV"], rec.type) &&
-        (rec.priority == null || (rec.priority >= 1 && rec.priority <= 99)) &&
+        (rec.priority == null || try(rec.priority >= 1 && rec.priority <= 99, false)) &&
         (rec.status == null || try(contains(["ENABLE", "DISABLE"], rec.status), false)) &&
         (rec.remark == null || (try(length(rec.remark), 0) <= 50 && can(regex("^[\u4e00-\u9fa5A-Za-z0-9._-]*$", rec.remark))))
       )

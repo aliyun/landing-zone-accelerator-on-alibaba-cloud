@@ -11,4 +11,4 @@ policy_document:
         StringNotEquals:
           "oss:ResourceTag/Environment": ["Production"]
 target_ids:
-  - "fd-xxxxx"
+  - "fd-2ze0xxxxxxxxxxxxxxxx"

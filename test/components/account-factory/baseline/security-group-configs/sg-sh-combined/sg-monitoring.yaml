@@ -1,0 +1,26 @@
+security_group_name: sg-monitoring
+description: Security group for monitoring servers (Prometheus/Grafana)
+inner_access_policy: Accept
+security_group_type: normal
+tags:
+  Environment: test
+  Project: landing-zone
+  Application: Monitoring
+rules:
+  - type: ingress
+    ip_protocol: tcp
+    policy: accept
+    priority: 1
+    cidr_ip: 10.0.0.0/8
+    port_range: 9090/9090
+    nic_type: intranet
+    description: Allow Prometheus from VPC
+  - type: ingress
+    ip_protocol: tcp
+    policy: accept
+    priority: 1
+    cidr_ip: 10.0.0.0/8
+    port_range: 3000/3000
+    nic_type: intranet
+    description: Allow Grafana from VPC
+

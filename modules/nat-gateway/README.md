@@ -6,27 +6,27 @@
 
 # NAT Gateway Module
 
-This module creates and manages Alibaba Cloud NAT Gateway with SNAT entries for outbound internet access.
+This module creates and manages Alibaba Cloud Enhanced NAT Gateway with SNAT entries for outbound internet access.
 
 ## Features
 
 - Creates Enhanced NAT Gateway (internet or intranet type)
 - Associates EIPs with NAT Gateway
 - Creates SNAT entries for source network address translation
-- Supports both PayAsYouGo and Subscription payment types
+- Supports PayAsYouGo billing for Enhanced NAT Gateway
 
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -47,15 +47,15 @@ No modules.
 module "nat_gateway" {
   source = "./modules/nat-gateway"
 
-  vpc_id          = "vpc-1234567890abcdef0"
-  vswitch_id      = "vsw-1234567890abcdef0"
+  vpc_id          = "vpc-uf6v10ktt3tnxxxxxxxx"
+  vswitch_id      = "vsw-uf62k55n02gqxxxxxxxx"
   nat_gateway_name = "production-nat"
   
-  association_eip_ids = ["eip-1234567890abcdef0"]
+  association_eip_ids = ["eip-2ze0xxxxxxxxxxxxxxxx"]
   
   snat_entries = [
     {
-      source_vswitch_id = "vsw-1234567890abcdef0"
+      source_vswitch_id = "vsw-uf62k55n02gqxxxxxxxx"
       use_all_associated_eips = true
     }
   ]
@@ -66,14 +66,19 @@ module "nat_gateway" {
 
 | Name | Description | Type | Default | Required | Constraints |
 |------|-------------|------|---------|----------|-------------|
-| `vpc_id` | VPC ID for NAT gateway | `string` | `""` | No | - |
+| `vpc_id` | VPC ID for NAT gateway | `string` | `""` | No | Required by underlying resource. Must be a valid VPC ID |
 | `vswitch_id` | VSwitch ID for NAT gateway | `string` | - | Yes | - |
 | `nat_gateway_name` | Name of the NAT gateway | `string` | `null` | No | 2-128 characters, alphanumeric or hyphens, cannot start/end with hyphen, cannot start with http:// or https:// |
+| `description` | Description of the NAT gateway | `string` | `null` | No | 2-256 characters if not null, cannot start with http:// or https:// |
+| `force` | Whether to forcefully delete the NAT gateway | `bool` | `false` | No | - |
 | `tags` | Tags for NAT Gateway | `map(string)` | `null` | No | - |
 | `association_eip_ids` | EIP instance IDs to associate with NAT gateway | `list(string)` | `[]` | No | - |
 | `network_type` | Type of NAT gateway | `string` | `"internet"` | No | Must be: `internet` or `intranet` |
-| `payment_type` | Billing method of the NAT gateway | `string` | `"PayAsYouGo"` | No | Must be: `PayAsYouGo` or `Subscription` |
-| `period` | Subscription period in months | `number` | `null` | No | Required when `payment_type = "Subscription"` |
+| `deletion_protection` | Whether to enable deletion protection for the NAT gateway | `bool` | `false` | No | - |
+| `eip_bind_mode` | EIP binding mode of the NAT gateway | `string` | `"MULTI_BINDED"` | No | Must be one of: `MULTI_BINDED`, `NAT` |
+| `icmp_reply_enabled` | Whether to enable ICMP reply | `bool` | `true` | No | - |
+| `private_link_enabled` | Whether to enable PrivateLink | `bool` | `false` | No | If true, access_mode must be configured appropriately |
+| `access_mode` | Access mode configuration for reverse access to the VPC NAT gateway | `set(object)` | `[]` | No | Each entry: `mode_value` in `route` or `tunnel`; if `mode_value = "tunnel"` and `tunnel_type` is set, it must be `geneve`. When `mode_value` is set, `private_link_enabled` must be `true` |
 | `snat_entries` | List of SNAT entries to create | `list(object)` | `[]` | No | See SNAT entry structure below |
 
 ### SNAT Entry Object Structure
@@ -95,6 +100,7 @@ Each SNAT entry in `snat_entries` must have the following structure:
 |------|-------------|
 | `nat_gateway_id` | The ID of the NAT gateway |
 | `nat_gateway_snat_entry_ids` | The ID list of SNAT entries |
+| `snat_entries` | List of all SNAT entries with detailed information (id, snat_entry_id, snat_ip, source_cidr, source_vswitch_id, snat_entry_name, eip_affinity, snat_table_id, status) |
 
 ## Examples
 

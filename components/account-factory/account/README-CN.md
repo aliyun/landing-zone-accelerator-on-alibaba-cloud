@@ -19,14 +19,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -48,7 +48,7 @@ module "account" {
 
   account_name_prefix = "application-a"
   display_name       = "应用 A 账号"
-  parent_folder_id   = "fd-1234567890abcdef"
+  parent_folder_id   = "fd-dearwxxxxxxxxxxxx"
   billing_type       = "Self-pay"
   
   tags = {
@@ -86,7 +86,7 @@ module "account" {
 
   account_name_prefix = "application-a"
   display_name       = "应用 A"
-  parent_folder_id   = "fd-abc123"
+  parent_folder_id   = "fd-dearwxxxxxxxxxxxx"
   billing_type       = "Self-pay"
 }
 ```
@@ -99,9 +99,9 @@ module "account" {
 
   account_name_prefix = "application-b"
   display_name       = "应用 B"
-  parent_folder_id   = "fd-abc123"
+  parent_folder_id   = "fd-dearwxxxxxxxxxxxx"
   billing_type       = "Trusteeship"
-  billing_account_id = "1234567890123456"
+  billing_account_id = "<ACCOUNT_ID>"
 }
 ```
 

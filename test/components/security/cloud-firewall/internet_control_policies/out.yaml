@@ -1,0 +1,38 @@
+- description: Allow outbound traffic from address book
+  source: test-ip-address-book
+  destination: 0.0.0.0/0
+  proto: TCP
+  dest_port: 8080/8080
+  acl_action: accept
+  source_type: group
+  destination_type: net
+  application_name_list:
+    - ANY
+    
+- description: Allow outbound HTTPS traffic
+  source: 0.0.0.0/0
+  destination: 0.0.0.0/0
+  proto: TCP
+  dest_port: 443/443
+  acl_action: accept
+  source_type: net
+  destination_type: net
+  application_name_list:
+    - HTTPS
+
+- description: Allow outbound MySQL with time restriction
+  source: 203.0.113.0/24
+  destination: 198.51.100.0/24
+  proto: TCP
+  dest_port: 3306/3306
+  acl_action: accept
+  source_type: net
+  destination_type: net
+  application_name_list:
+    - MySQL
+  ip_version: 4
+  start_time: 1704067200
+  end_time: 1704153600
+  repeat_type: Daily
+  repeat_start_time: "08:00"
+  repeat_end_time: "23:30"

@@ -20,26 +20,20 @@
 | Name | Version |
 |------|---------|
 | terraform | >= 1.5.0 |
-| alicloud | ~> 1.262.1 |
+| alicloud | ~> 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | ~> 1.262.1 |
+| alicloud | ~> 1.267.0 |
 
 ## Modules
 
 | Name | Source | Description |
 |------|--------|-------------|
+| kms_vpc | ../../../modules/vpc | KMS 实例的 VPC 和交换机（可选） |
 | kms_instance | ../../../modules/kms-instance | KMS 实例模块 |
-
-## 创建的资源
-
-| Name | Type | Description |
-|------|------|-------------|
-| [alicloud_vpc.kms_vpc](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vpc) | resource | KMS 实例的 VPC（可选） |
-| [alicloud_vswitch.kms_vswitch](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vswitch) | resource | KMS 实例的交换机（可选） |
 
 ## 使用方法
 

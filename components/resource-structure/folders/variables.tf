@@ -63,3 +63,9 @@ variable "folder_structure_file_path" {
   default     = null
 }
 
+variable "use_existing_resource_directory" {
+  description = "Whether to use an existing resource directory instead of creating a new one. When true, control policy must be manually enabled if not already enabled."
+  type        = bool
+  default     = false
+}
+

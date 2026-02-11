@@ -22,12 +22,12 @@ Landing Zone Accelerator 是一个基于 Terraform 的阿里云 Landing Zone 解
 - 使用到的 Terraform Resource 或 Datasource 数量 >= 2
 
 **主要模块包括：**
-- 网络模块：VPC、NAT 网关、EIP、PrivateZone、CEN VPC 连接、DMZ VPC 出网
-- 安全模块：KMS 实例、WAFv3 实例/模板/规则、RAM 角色、RAM 安全偏好设置
+- 网络模块：VPC、NAT 网关、EIP、PrivateZone、CEN VPC 连接、CEN 带宽包、共享带宽包、DMZ VPC 出网、安全组
+- 安全模块：KMS 实例、安全组
 - 日志模块：SLS Project、SLS Logstore、OSS Bucket
 - 身份模块：CloudSSO 用户和组
-- 监控模块：CMS、Contact
-- 配置模块：Config Configuration Recorder、Preset Tag
+- 监控模块：CMS 服务、CMS 告警联系人
+- 配置模块：Config Configuration Recorder、标签策略
 
 ### 2. Component（组件）层
 
@@ -56,13 +56,17 @@ Component 可以认为是更高维度的 Module，开发方式和 Terraform Modu
 
 - **账号工厂 (Account Factory)**
   - `account`：创建成员账号
-  - `baseline`：配置账号基线
+  - `baseline`：配置账号基线（contact、preset-tag、ram-role、ram-security-preference、ram-user、security-group、vpc-baseline）
 
 - **身份管理 (Identity)**
   - `cloudsso`：CloudSSO 配置，包括开通服务、创建访问配置、用户和组管理
 
 - **网络 (Network)**
-  - `cen`：云企业网实例和转发路由器
+  - `cen-instance`：云企业网实例
+  - `cen-transit-router`：云企业网转发路由器
+  - `cen-route-map`：云企业网路由映射
+  - `cen-tr-inter-region-connection`：转发路由器跨地域连接
+  - `cen-vpn-connection`：云企业网 VPN 连接
   - `dmz`：DMZ 网络区域配置
 
 - **安全 (Security)**
@@ -93,7 +97,7 @@ Component 可以认为是更高维度的 Module，开发方式和 Terraform Modu
 ### 账号工厂 (Account Factory)
 
 - 创建成员账号
-- 配置账号基线（RAM 角色、安全偏好等）
+- 配置账号基线（告警联系人、预设标签、RAM 角色、RAM 安全偏好、RAM 用户、安全组、VPC 基线等）
 
 ### 身份管理 (Identity)
 
@@ -104,7 +108,7 @@ Component 可以认为是更高维度的 Module，开发方式和 Terraform Modu
 
 ### 网络 (Network)
 
-- 云企业网 (CEN) 实例和转发路由器
+- 云企业网 (CEN) 实例、转发路由器、路由映射、跨地域连接、VPN 连接
 - DMZ 网络区域配置
 - VPC 间互联
 

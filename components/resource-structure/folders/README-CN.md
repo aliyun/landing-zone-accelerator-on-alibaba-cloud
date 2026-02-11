@@ -20,14 +20,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -88,6 +88,7 @@ module "folders" {
 |------|-------------|------|---------|----------|-------------|
 | `folder_structure` | 要创建的文件夹配置列表 | `list(object)` | `[]` | No | 层级 1-5，有效的文件夹名称，正确的父子关系 |
 | `folder_structure_file_path` | 定义文件夹结构的 JSON/YAML 文件路径 | `string` | `null` | No | 支持 .json, .yaml, .yml |
+| `use_existing_resource_directory` | 是否使用已有的资源目录而不是创建新的。当设置为 true 时，如果管控策略未启用，需要手动启用。 | `bool` | `false` | No | - |
 
 ### folder_structure 对象
 
@@ -185,7 +186,9 @@ module "folders" {
 
 ## 注意事项
 
-- 资源目录会自动创建并启用
+- 资源目录默认会自动创建并启用（当 `use_existing_resource_directory` 为 `false` 时）
+- 当 `use_existing_resource_directory` 设置为 `true` 时，组件将使用已有的资源目录，不会创建新的资源目录
+- **重要**：创建新资源目录时，管控策略会自动启用。如果使用已有资源目录（`use_existing_resource_directory = true`），必须确保在阿里云控制台中已启用管控策略，如果未启用则需要手动启用
 - 文件夹按层级顺序创建（从 level 1 到 5）
 - 如果 folder_structure 中未包含核心文件夹，会自动创建
 - 同一层级内的文件夹名称必须唯一

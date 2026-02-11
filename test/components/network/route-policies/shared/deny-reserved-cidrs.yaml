@@ -1,0 +1,11 @@
+# Shared policy: Deny VPN from advertising reserved CIDR blocks
+- transmit_direction: RegionOut
+  priority: 10
+  map_result: Deny
+  description: VPN拒绝发布10.0.1.0/24的路由
+  destination_child_instance_types:
+    - VPN
+  destination_cidr_blocks:
+    - 10.0.1.0/24
+  cidr_match_mode: Complete
+

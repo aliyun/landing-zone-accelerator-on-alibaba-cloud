@@ -2,9 +2,9 @@ terraform {
   required_providers {
     alicloud = {
       source                = "hashicorp/alicloud"
-      version               = ">= 1.262.1"
-      configuration_aliases = [alicloud.cen, alicloud.dmz]
+      version               = ">= 1.267.0"
+      configuration_aliases = [alicloud.cen_tr, alicloud.dmz]
     }
   }
-  required_version = ">= 0.13"
+  required_version = ">= 1.2"
 }

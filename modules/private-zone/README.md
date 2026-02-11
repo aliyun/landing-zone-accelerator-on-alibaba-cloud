@@ -19,14 +19,14 @@ This module creates and manages Alibaba Cloud Private DNS Zone resources, includ
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -54,7 +54,7 @@ module "private_zone" {
   
   vpc_bindings = [
     {
-      vpc_id    = "vpc-1234567890abcdef0"
+      vpc_id    = "vpc-uf6v10ktt3tnxxxxxxxx"
       region_id = "cn-hangzhou"
     }
   ]
@@ -81,7 +81,7 @@ module "private_zone" {
 | `lang` | Application Private Zone language | `string` | `"en"` | No | Must be `"zh"` or `"en"` |
 | `resource_group_id` | The resource group ID which the Private Zone belongs to | `string` | `""` | No | - |
 | `tags` | The tags of the Private Zone | `map(string)` | `{}` | No | - |
-| `vpc_bindings` | VPC binding list for zone effective scope | `list(object)` | - | Yes | Each item contains `vpc_id` (required) and `region_id` (optional) |
+| `vpc_bindings` | VPC binding list for zone effective scope | `list(object)` | `[]` | No | Each item contains `vpc_id` (required) and `region_id` (optional) |
 | `record_entries` | DNS record settings | `list(object)` | `[]` | No | See record object structure below |
 
 ### Record Entry Object Structure

@@ -6,27 +6,27 @@
 
 # NAT Gateway 模块
 
-该模块用于创建和管理阿里云 NAT 网关，包含 SNAT 条目以提供出站互联网访问。
+该模块用于创建和管理阿里云增强型 NAT 网关，包含 SNAT 条目以提供出站互联网访问。
 
 ## 功能特性
 
 - 创建增强型 NAT 网关（公网或私网类型）
 - 将 EIP 关联到 NAT 网关
 - 创建 SNAT 条目用于源网络地址转换
-- 支持按量付费和包年包月两种付费类型
+- 支持增强型 NAT 网关的按量付费计费方式
 
 ## 前置要求
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -47,15 +47,15 @@
 module "nat_gateway" {
   source = "./modules/nat-gateway"
 
-  vpc_id          = "vpc-1234567890abcdef0"
-  vswitch_id      = "vsw-1234567890abcdef0"
+  vpc_id          = "vpc-uf6v10ktt3tnxxxxxxxx"
+  vswitch_id      = "vsw-uf62k55n02gqxxxxxxxx"
   nat_gateway_name = "production-nat"
   
-  association_eip_ids = ["eip-1234567890abcdef0"]
+  association_eip_ids = ["eip-2ze0xxxxxxxxxxxxxxxx"]
   
   snat_entries = [
     {
-      source_vswitch_id = "vsw-1234567890abcdef0"
+      source_vswitch_id = "vsw-uf62k55n02gqxxxxxxxx"
       use_all_associated_eips = true
     }
   ]
@@ -66,14 +66,19 @@ module "nat_gateway" {
 
 | 参数名 | 说明 | 类型 | 默认值 | 必填 | 限制条件 |
 |--------|------|------|--------|------|----------|
-| `vpc_id` | NAT 网关的 VPC ID | `string` | `""` | 否 | - |
+| `vpc_id` | NAT 网关的 VPC ID | `string` | `""` | 否 | 底层资源必填，需为有效的 VPC ID |
 | `vswitch_id` | NAT 网关的交换机 ID | `string` | - | 是 | - |
 | `nat_gateway_name` | NAT 网关名称 | `string` | `null` | 否 | 2-128 个字符，字母数字或连字符，不能以连字符开头或结尾，不能以 http:// 或 https:// 开头 |
+| `description` | NAT 网关描述 | `string` | `null` | 否 | 非空时 2-256 个字符，且不能以 http:// 或 https:// 开头 |
+| `force` | 是否强制删除 NAT 网关 | `bool` | `false` | 否 | - |
 | `tags` | NAT 网关标签 | `map(string)` | `null` | 否 | - |
 | `association_eip_ids` | 要关联到 NAT 网关的 EIP 实例 ID 列表 | `list(string)` | `[]` | 否 | - |
 | `network_type` | NAT 网关类型 | `string` | `"internet"` | 否 | 必须为：`internet` 或 `intranet` |
-| `payment_type` | NAT 网关计费方式 | `string` | `"PayAsYouGo"` | 否 | 必须为：`PayAsYouGo` 或 `Subscription` |
-| `period` | 包年包月时长（月） | `number` | `null` | 否 | 当 `payment_type = "Subscription"` 时必填 |
+| `deletion_protection` | 是否启用删除保护 | `bool` | `false` | 否 | - |
+| `eip_bind_mode` | NAT 网关的 EIP 绑定模式 | `string` | `"MULTI_BINDED"` | 否 | 取值：`MULTI_BINDED`、`NAT` |
+| `icmp_reply_enabled` | 是否启用 ICMP 回显 | `bool` | `true` | 否 | - |
+| `private_link_enabled` | 是否启用 PrivateLink | `bool` | `false` | 否 | 如为 true，应同时正确配置 `access_mode` |
+| `access_mode` | 反向访问 VPC NAT 网关的接入模式配置 | `set(object)` | `[]` | 否 | 每个元素需满足：`mode_value` 为 `route` 或 `tunnel`；当 `mode_value = "tunnel"` 且设置了 `tunnel_type` 时，必须为 `geneve`。当指定 `mode_value` 时，`private_link_enabled` 必须为 true |
 | `snat_entries` | 要创建的 SNAT 条目列表 | `list(object)` | `[]` | 否 | 见下方 SNAT 条目结构 |
 
 ### SNAT 条目对象结构
@@ -95,6 +100,7 @@ module "nat_gateway" {
 |--------|------|
 | `nat_gateway_id` | NAT 网关 ID |
 | `nat_gateway_snat_entry_ids` | SNAT 条目 ID 列表 |
+| `snat_entries` | 所有 SNAT 条目详细信息列表（包含 id、snat_entry_id、snat_ip、source_cidr、source_vswitch_id、snat_entry_name、eip_affinity、snat_table_id、status） |
 
 ## 使用示例
 

@@ -20,26 +20,20 @@ This component creates and manages Alibaba Cloud Key Management Service (KMS) in
 | Name | Version |
 |------|---------|
 | terraform | >= 1.5.0 |
-| alicloud | ~> 1.262.1 |
+| alicloud | ~> 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | ~> 1.262.1 |
+| alicloud | ~> 1.267.0 |
 
 ## Modules
 
 | Name | Source | Description |
 |------|--------|-------------|
+| kms_vpc | ../../../modules/vpc | VPC and VSwitch for KMS instance (optional) |
 | kms_instance | ../../../modules/kms-instance | KMS instance module |
-
-## Resources
-
-| Name | Type | Description |
-|------|------|-------------|
-| [alicloud_vpc.kms_vpc](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vpc) | resource | VPC for KMS instance (optional) |
-| [alicloud_vswitch.kms_vswitch](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/vswitch) | resource | VSwitch for KMS instance (optional) |
 
 ## Usage
 

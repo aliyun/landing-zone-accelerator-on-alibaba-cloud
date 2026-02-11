@@ -3,7 +3,7 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "route_table_id" {
+variable "vpc_route_table_id" {
   description = "The ID of the route table in the VPC. If not specified, the system route table will be used."
   type        = string
   default     = null
@@ -14,13 +14,24 @@ variable "vpc_tr_attachment_id" {
   type        = string
 }
 
-variable "cidr_block" {
+variable "vpc_route_entry_destination_cidrblock" {
+  description = "The destination CIDR block for the VPC route entry. Defaults to 0.0.0.0/0 for Internet egress."
+  type        = string
+  default     = "0.0.0.0/0"
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.vpc_route_entry_destination_cidrblock))
+    error_message = "vpc_route_entry_destination_cidrblock must be a valid IPv4 CIDR block, e.g., 0.0.0.0/0."
+  }
+}
+
+variable "vpc_cidr_block" {
   description = "The CIDR block routed from VPC to DMZ."
   type        = string
 
   validation {
-    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.cidr_block))
-    error_message = "cidr_block must be a valid IPv4 CIDR block, e.g., 192.168.1.0/24."
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.vpc_cidr_block))
+    error_message = "vpc_cidr_block must be a valid IPv4 CIDR block, e.g., 192.168.1.0/24."
   }
 }
 
@@ -40,26 +51,26 @@ variable "dmz_vpc_tr_attachment_id" {
   type        = string
 }
 
-variable "nat_gateway_id" {
+variable "dmz_nat_gateway_id" {
   description = "The ID of the NAT Gateway in the DMZ VPC for SNAT configuration."
   type        = string
 }
 
-variable "snat_table_id" {
+variable "dmz_snat_table_id" {
   description = "The ID of the SNAT table in the NAT Gateway. If not specified, the first SNAT table will be used."
   type        = string
   default     = null
 }
 
-variable "eip_addresses" {
+variable "dmz_eip_addresses" {
   description = "List of EIP addresses for SNAT configuration."
   type        = list(string)
   default     = []
 
   validation {
     condition = alltrue([
-      for ip in var.eip_addresses : can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", ip))
+      for ip in var.dmz_eip_addresses : can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", ip))
     ])
-    error_message = "Each eip_addresses element must be a valid IPv4 address, e.g., 203.0.113.1."
+    error_message = "Each dmz_eip_addresses element must be a valid IPv4 address, e.g., 203.0.113.1."
   }
 }

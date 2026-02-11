@@ -1,0 +1,13 @@
+# Shanghai Transit Router route policy (array format)
+# VBR route policy - Community operation
+- transmit_direction: RegionOut
+  priority: 20
+  map_result: Permit
+  description: Add community for routes to VBR in Shanghai
+  destination_child_instance_types:
+    - VBR
+  community_operate_mode: Additive
+  operate_community_set:
+    - "45104:100"
+  preference: 50
+

@@ -20,14 +20,14 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 
 ## Modules
 
@@ -177,7 +177,7 @@ module "preventive_guardrails" {
       name        = "SpecificFolderPolicy"
       description = "特定文件夹策略"
       policy_document = jsonencode({...})
-      target_ids = ["fd-abc123", "fd-xyz789"]
+      target_ids = ["fd-2ze0xxxxxxxxxxxxxxxx", "fd-2ze0xxxxxxxxxxxxxxxx"]
     }
   ]
 }

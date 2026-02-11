@@ -1,0 +1,11 @@
+# Shared policy: Deny routes from specific regions
+# This policy is reused by both cn-shanghai and cn-beijing
+# Denies routes from Japan and United States regions
+- transmit_direction: RegionIn
+  priority: 8
+  map_result: Deny
+  description: 拒绝来自指定地域的路由
+  source_region_ids:
+    - ap-northeast-1  # Japan (Tokyo)
+    - us-west-1        # United States (Silicon Valley)
+    - us-east-1        # United States (Virginia)

@@ -37,17 +37,17 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 | random | >= 3.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
-| alicloud.log_audit | >= 1.262.1（region 必须是 `cn-shanghai` 或 `ap-southeast-1`） |
-| alicloud.sls_project | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
+| alicloud.log_audit | >= 1.267.0（region 必须是 `cn-shanghai` 或 `ap-southeast-1`） |
+| alicloud.sls_project | >= 1.267.0 |
 | random | >= 3.1.0 |
 
 ## Modules

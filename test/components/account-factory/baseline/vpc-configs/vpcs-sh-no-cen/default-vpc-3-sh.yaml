@@ -1,0 +1,23 @@
+vpc_name: default-vpc-3
+vpc_cidr: 10.14.0.0/16
+vpc_description: Default VPC 3 (without CEN)
+vpc_tags:
+  Environment: test
+  Project: landing-zone
+vswitches:
+  - vswitch_name: vpc-sh-3-vswitch-1
+    cidr_block: 10.14.1.0/24
+    zone_id: cn-shanghai-l
+    description: VPC SH 3 vswitch 1
+    tags:
+      Environment: test
+      Project: landing-zone
+  - vswitch_name: vpc-sh-3-vswitch-2
+    cidr_block: 10.14.2.0/24
+    zone_id: cn-shanghai-e
+    description: VPC SH 3 vswitch 2
+    tags:
+      Environment: test
+      Project: landing-zone
+enable_acl: false
+

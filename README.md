@@ -22,12 +22,12 @@ The bottommost fine-grained modules, typically abstracted as a Module when meeti
 - Uses >= 2 Terraform Resources or Datasources
 
 **Main modules include:**
-- Network modules: VPC, NAT Gateway, EIP, PrivateZone, CEN VPC Attachment, DMZ VPC Egress
-- Security modules: KMS Instance, WAFv3 Instance/Template/Rule, RAM Role, RAM Security Preference
+- Network modules: VPC, NAT Gateway, EIP, PrivateZone, CEN VPC Attachment, CEN Bandwidth Package, Common Bandwidth Package, DMZ VPC Egress, Security Group
+- Security modules: KMS Instance, Security Group
 - Logging modules: SLS Project, SLS Logstore, OSS Bucket
 - Identity modules: CloudSSO Users and Groups
-- Monitoring modules: CMS, Contact
-- Configuration modules: Config Configuration Recorder, Preset Tag
+- Monitoring modules: CMS Service, CMS Alarm Contact
+- Configuration modules: Config Configuration Recorder, Tag Policy
 
 ### 2. Component Layer
 
@@ -56,13 +56,17 @@ Component can be considered a higher-dimensional Module, developed in the same w
 
 - **Account Factory**
   - `account`: Create member accounts
-  - `baseline`: Configure account baseline
+  - `baseline`: Configure account baseline (contact, preset-tag, ram-role, ram-security-preference, ram-user, security-group, vpc-baseline)
 
 - **Identity Management**
   - `cloudsso`: CloudSSO configuration, including service activation, access configuration creation, user and group management
 
 - **Network**
-  - `cen`: Cloud Enterprise Network instance and Transit Router
+  - `cen-instance`: Cloud Enterprise Network instance
+  - `cen-transit-router`: CEN Transit Router
+  - `cen-route-map`: CEN route map
+  - `cen-tr-inter-region-connection`: CEN Transit Router inter-region connection
+  - `cen-vpn-connection`: CEN VPN connection
   - `dmz`: DMZ network zone configuration
 
 - **Security**
@@ -93,7 +97,7 @@ Component can be considered a higher-dimensional Module, developed in the same w
 ### Account Factory
 
 - Create member accounts
-- Configure account baseline (RAM roles, security preferences, etc.)
+- Configure account baseline (contact, preset tag, RAM role, RAM security preference, RAM user, security group, VPC baseline)
 
 ### Identity Management
 
@@ -104,7 +108,7 @@ Component can be considered a higher-dimensional Module, developed in the same w
 
 ### Network
 
-- Cloud Enterprise Network (CEN) instance and Transit Router
+- Cloud Enterprise Network (CEN) instance, Transit Router, route map, inter-region connection, VPN connection
 - DMZ network zone configuration
 - Inter-VPC connectivity
 

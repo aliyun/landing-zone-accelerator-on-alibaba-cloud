@@ -56,7 +56,7 @@ variable "max_split_shard_count" {
   default     = null
 
   validation {
-    condition     = var.max_split_shard_count == null || (var.max_split_shard_count != null && var.max_split_shard_count >= 1 && var.max_split_shard_count <= 256)
+    condition     = var.max_split_shard_count == null || try(var.max_split_shard_count >= 1 && var.max_split_shard_count <= 256, false)
     error_message = "max_split_shard_count must be provided when auto_split is true and be between 1 and 256."
   }
 }
@@ -95,7 +95,7 @@ variable "hot_ttl" {
   default     = 30
 
   validation {
-    condition     = var.hot_ttl == null || var.hot_ttl >= 30
+    condition     = var.hot_ttl == null || try(var.hot_ttl >= 30, false)
     error_message = "hot_ttl must be at least 30 days."
   }
 }

@@ -1,0 +1,39 @@
+vpc_name: default-vpc-2
+vpc_cidr: 10.11.0.0/16
+vpc_description: Default VPC 2
+vpc_tags:
+  Environment: test
+  Project: landing-zone
+vswitches:
+  - vswitch_name: vpc-sh-2-vswitch-1
+    cidr_block: 10.11.1.0/24
+    zone_id: cn-shanghai-l
+    description: VPC SH 2 vswitch 1
+    purpose: TR
+    tags:
+      Environment: test
+      Project: landing-zone
+  - vswitch_name: vpc-sh-2-vswitch-2
+    cidr_block: 10.11.2.0/24
+    zone_id: cn-shanghai-e
+    description: VPC SH 2 vswitch 2
+    purpose: TR
+    tags:
+      Environment: test
+      Project: landing-zone
+  - vswitch_name: vpc-sh-2-vswitch-3
+    cidr_block: 10.11.3.0/24
+    zone_id: cn-shanghai-f
+    description: VPC SH 2 vswitch 3
+    purpose: TR
+    tags:
+      Environment: test
+      Project: landing-zone
+cen_attachment:
+  enabled: true
+  cen_tr_attachment_name: vpc-sh-2-tr-attachment
+  cen_tr_attachment_description: CEN attachment for VPC 2 in Shanghai
+  vpc_route_entries:
+    - destination_cidrblock: 0.0.0.0/0
+      name: route-to-tr
+

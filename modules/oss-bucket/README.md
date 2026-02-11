@@ -22,15 +22,15 @@ This module creates and manages Alibaba Cloud Object Storage Service (OSS) bucke
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| alicloud | >= 1.262.1 |
+| terraform | >= 1.2 |
+| alicloud | >= 1.267.0 |
 | random | >= 3.6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | >= 1.262.1 |
+| alicloud | >= 1.267.0 |
 | random | >= 3.6.0 |
 
 ## Modules

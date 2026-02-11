@@ -1,0 +1,17 @@
+- existing_host_id: "2"
+  host_accounts:
+    - protocol_name: "SSH"
+      host_account_name: "account_yaml"
+      password: "123456"
+- host_config:
+    active_address_type: "Private"
+    comment: "Test Bastion Host"
+    host_name: "i-yaml_config"
+    host_private_address: "192.168.0.27"
+    host_public_address: null
+    instance_region_id: "cn-shanghai"
+    os_type: "Linux"
+    source: "Ecs"
+    source_instance_id: "i-uf6ggvi9u6xxxxxxxxxx"
+  host_group_names:
+    - "group test"

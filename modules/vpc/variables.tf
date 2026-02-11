@@ -77,7 +77,7 @@ variable "ipv4_cidr_mask" {
   default     = null
 
   validation {
-    condition     = var.ipv4_cidr_mask == null || (var.ipv4_cidr_mask >= 0 && var.ipv4_cidr_mask <= 32)
+    condition     = var.ipv4_cidr_mask == null || try(var.ipv4_cidr_mask >= 0 && var.ipv4_cidr_mask <= 32, false)
     error_message = "The ipv4_cidr_mask must be an integer between 8 and 32, e.g., 16 for a /16 CIDR block."
   }
 }
@@ -177,42 +177,74 @@ variable "ingress_acl_entries" {
 
   validation {
     condition = alltrue([
-      for entry in var.ingress_acl_entries : (
-        (
-          !contains(keys(entry), "description") || (
-            entry.description == null || (
-              try(length(entry.description), 0) >= 1 &&
-              try(length(entry.description), 0) <= 256 &&
-              !can(regex("^https?://", entry.description))
-            )
-          )
-        ) &&
-        (
-          !contains(keys(entry), "ip_version") || (
-            entry.ip_version == null || try(contains(["IPV4", "IPV6"], try(upper(entry.ip_version), "")), false)
-          )
-        ) &&
-        (
-          !contains(keys(entry), "network_acl_entry_name") || (
-            entry.network_acl_entry_name == null || (
-              try(length(entry.network_acl_entry_name), 0) >= 1 &&
-              try(length(entry.network_acl_entry_name), 0) <= 128 &&
-              !can(regex("^https?://", entry.network_acl_entry_name))
-            )
-          )
-        ) &&
-        contains(["accept", "drop"], entry.policy) &&
-        contains(["icmp", "gre", "tcp", "udp", "all"], entry.protocol) &&
-        (
-          contains(["all", "icmp", "gre"], entry.protocol) ? entry.port == "-1/-1" :
-          can(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)) && (
-            tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) >= 1 && tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) <= 65535 &&
-            tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) >= 1 && tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) <= 65535
-          )
-        )
+      for entry in var.ingress_acl_entries :
+      !contains(keys(entry), "description") || entry.description == null || (
+        try(length(entry.description), 0) >= 1 &&
+        try(length(entry.description), 0) <= 256 &&
+        !can(regex("^https?://", entry.description))
       )
     ])
-    error_message = "Each ingress_acl_entry must meet: description 1-256 chars, not start with http(s); ip_version IPV4 or IPV6; network_acl_entry_name 1-128 chars, not start with http(s); policy accept or drop; protocol icmp, gre, tcp, udp, all; port: -1/-1 for all, icmp, gre, or 1-65535/1-65535 for tcp, udp."
+    error_message = "Each ingress_acl_entry.description must be 1-256 chars and not start with http(s)."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.ingress_acl_entries :
+      !contains(keys(entry), "ip_version") || entry.ip_version == null || try(contains(["IPV4", "IPV6"], try(upper(entry.ip_version), "")), false)
+    ])
+    error_message = "Each ingress_acl_entry.ip_version must be IPV4 or IPV6."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.ingress_acl_entries :
+      !contains(keys(entry), "network_acl_entry_name") || entry.network_acl_entry_name == null || (
+        try(length(entry.network_acl_entry_name), 0) >= 1 &&
+        try(length(entry.network_acl_entry_name), 0) <= 128 &&
+        !can(regex("^https?://", entry.network_acl_entry_name))
+      )
+    ])
+    error_message = "Each ingress_acl_entry.network_acl_entry_name must be 1-128 chars and not start with http(s)."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.ingress_acl_entries :
+      contains(["accept", "drop"], entry.policy)
+    ])
+    error_message = "Each ingress_acl_entry.policy must be 'accept' or 'drop'."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.ingress_acl_entries :
+      contains(["icmp", "gre", "tcp", "udp", "all"], entry.protocol)
+    ])
+    error_message = "Each ingress_acl_entry.protocol must be one of: icmp, gre, tcp, udp, all."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.ingress_acl_entries :
+      contains(["all", "icmp", "gre"], entry.protocol) ? entry.port == "-1/-1" : can(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port))
+    ])
+    error_message = "Each ingress_acl_entry.port must be '-1/-1' for all/icmp/gre protocols, or in format 'start_port/end_port' for tcp/udp protocols."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.ingress_acl_entries :
+      contains(["all", "icmp", "gre"], entry.protocol) || entry.port == "-1/-1" || try(
+        can(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)) && (
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) >= 1 &&
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) <= 65535 &&
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) >= 1 &&
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) <= 65535
+        ),
+        false
+      )
+    ])
+    error_message = "Each ingress_acl_entry.port start_port and end_port must be 1-65535 for tcp/udp protocols."
   }
 }
 
@@ -231,41 +263,73 @@ variable "egress_acl_entries" {
 
   validation {
     condition = alltrue([
-      for entry in var.egress_acl_entries : (
-        (
-          !contains(keys(entry), "description") || (
-            entry.description == null || (
-              try(length(entry.description), 0) >= 1 &&
-              try(length(entry.description), 0) <= 256 &&
-              !can(regex("^https?://", entry.description))
-            )
-          )
-        ) &&
-        (
-          !contains(keys(entry), "ip_version") || (
-            entry.ip_version == null || try(contains(["IPV4", "IPV6"], try(upper(entry.ip_version), "")), false)
-          )
-        ) &&
-        (
-          !contains(keys(entry), "network_acl_entry_name") || (
-            entry.network_acl_entry_name == null || (
-              try(length(entry.network_acl_entry_name), 0) >= 1 &&
-              try(length(entry.network_acl_entry_name), 0) <= 128 &&
-              !can(regex("^https?://", entry.network_acl_entry_name))
-            )
-          )
-        ) &&
-        contains(["accept", "drop"], entry.policy) &&
-        contains(["icmp", "gre", "tcp", "udp", "all"], entry.protocol) &&
-        (
-          contains(["all", "icmp", "gre"], entry.protocol) ? entry.port == "-1/-1" :
-          can(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)) && (
-            tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) >= 1 && tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) <= 65535 &&
-            tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) >= 1 && tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) <= 65535
-          )
-        )
+      for entry in var.egress_acl_entries :
+      !contains(keys(entry), "description") || entry.description == null || (
+        try(length(entry.description), 0) >= 1 &&
+        try(length(entry.description), 0) <= 256 &&
+        !can(regex("^https?://", entry.description))
       )
     ])
-    error_message = "Each egress_acl_entry must meet: description 1-256 chars, not start with http(s); ip_version IPV4 or IPV6; network_acl_entry_name 1-128 chars, not start with http(s); policy accept or drop; protocol icmp, gre, tcp, udp, all; port: -1/-1 for all, icmp, gre, or 1-65535/1-65535 for tcp, udp."
+    error_message = "Each egress_acl_entry.description must be 1-256 chars and not start with http(s)."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.egress_acl_entries :
+      !contains(keys(entry), "ip_version") || entry.ip_version == null || try(contains(["IPV4", "IPV6"], try(upper(entry.ip_version), "")), false)
+    ])
+    error_message = "Each egress_acl_entry.ip_version must be IPV4 or IPV6."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.egress_acl_entries :
+      !contains(keys(entry), "network_acl_entry_name") || entry.network_acl_entry_name == null || (
+        try(length(entry.network_acl_entry_name), 0) >= 1 &&
+        try(length(entry.network_acl_entry_name), 0) <= 128 &&
+        !can(regex("^https?://", entry.network_acl_entry_name))
+      )
+    ])
+    error_message = "Each egress_acl_entry.network_acl_entry_name must be 1-128 chars and not start with http(s)."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.egress_acl_entries :
+      contains(["accept", "drop"], entry.policy)
+    ])
+    error_message = "Each egress_acl_entry.policy must be 'accept' or 'drop'."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.egress_acl_entries :
+      contains(["icmp", "gre", "tcp", "udp", "all"], entry.protocol)
+    ])
+    error_message = "Each egress_acl_entry.protocol must be one of: icmp, gre, tcp, udp, all."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.egress_acl_entries :
+      contains(["all", "icmp", "gre"], entry.protocol) ? entry.port == "-1/-1" : can(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port))
+    ])
+    error_message = "Each egress_acl_entry.port must be '-1/-1' for all/icmp/gre protocols, or in format 'start_port/end_port' for tcp/udp protocols."
+  }
+
+  validation {
+    condition = alltrue([
+      for entry in var.egress_acl_entries :
+      contains(["all", "icmp", "gre"], entry.protocol) || entry.port == "-1/-1" || try(
+        can(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)) && (
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) >= 1 &&
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[0]) <= 65535 &&
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) >= 1 &&
+          tonumber(regex("^(\\d{1,5})/(\\d{1,5})$", entry.port)[1]) <= 65535
+        ),
+        false
+      )
+    ])
+    error_message = "Each egress_acl_entry.port start_port and end_port must be 1-65535 for tcp/udp protocols."
   }
 }

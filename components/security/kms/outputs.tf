@@ -15,17 +15,17 @@ output "kms_instance_name" {
 
 output "vpc_id" {
   description = "The ID of the VPC"
-  value       = try(alicloud_vpc.kms_vpc[0].id, null)
+  value       = try(module.kms_vpc[0].vpc_id, null)
 }
 
 output "vswitch_id" {
   description = "The ID of the VSwitch"
-  value       = try(alicloud_vswitch.kms_vswitch[0].id, null)
+  value       = try(module.kms_vpc[0].vswitchs[0].id, null)
 }
 
 output "vswitch_ids" {
   description = "The IDs of all VSwitches"
-  value       = try([alicloud_vswitch.kms_vswitch[0].id], [])
+  value       = try([module.kms_vpc[0].vswitchs[0].id], [])
 }
 
 output "zone_ids" {

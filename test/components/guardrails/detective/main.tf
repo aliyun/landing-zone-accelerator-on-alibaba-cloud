@@ -13,7 +13,7 @@ module "detective_guardrails" {
 
   aggregator_accounts = [
     {
-      account_id   = "1746261014624226"
+      account_id   = "<ACCOUNT_ID>"
       account_name = "shared-service"
     }
   ]
@@ -68,7 +68,7 @@ resource "alicloud_config_aggregator" "folder_test" {
   aggregator_name = "test-folder-aggregator"
   aggregator_type = "FOLDER"
   description     = "Test FOLDER type aggregator"
-  folder_id       = "fd-AReNIAeCeI"
+  folder_id       = "fd-dearwxxxxxxxxxxxx"
 }
 
 # Test RD type aggregator

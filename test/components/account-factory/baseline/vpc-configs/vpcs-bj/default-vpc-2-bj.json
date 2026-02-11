@@ -1,0 +1,61 @@
+{
+  "vpc_name": "default-vpc-2",
+  "vpc_cidr": "10.13.0.0/16",
+  "vpc_description": "Default VPC 2 (without CEN)",
+  "vpc_tags": {
+    "Environment": "test",
+    "Project": "landing-zone"
+  },
+  "vswitches": [
+    {
+      "vswitch_name": "vpc-bj-2-vswitch-1",
+      "cidr_block": "10.13.1.0/24",
+      "zone_id": "cn-beijing-j",
+      "description": "VPC BJ 2 vswitch 1",
+      "tags": {
+        "Environment": "test",
+        "Project": "landing-zone"
+      }
+    },
+    {
+      "vswitch_name": "vpc-bj-2-vswitch-2",
+      "cidr_block": "10.13.2.0/24",
+      "zone_id": "cn-beijing-k",
+      "description": "VPC BJ 2 vswitch 2",
+      "tags": {
+        "Environment": "test",
+        "Project": "landing-zone"
+      }
+    }
+  ],
+  "enable_acl": true,
+  "acl_name": "default-acl",
+  "acl_description": "Default ACL",
+  "acl_tags": {
+    "Environment": "test",
+    "Project": "landing-zone"
+  },
+  "ingress_acl_entries": [
+    {
+      "protocol": "tcp",
+      "port": "80/80",
+      "source_cidr_ip": "0.0.0.0/0",
+      "policy": "accept",
+      "description": "Allow HTTP",
+      "network_acl_entry_name": "allow-http",
+      "ip_version": "IPV4"
+    }
+  ],
+  "egress_acl_entries": [
+    {
+      "protocol": "all",
+      "port": "-1/-1",
+      "destination_cidr_ip": "0.0.0.0/0",
+      "policy": "accept",
+      "description": "Allow all outbound",
+      "network_acl_entry_name": "allow-all-egress",
+      "ip_version": "IPV4"
+    }
+  ]
+}
+

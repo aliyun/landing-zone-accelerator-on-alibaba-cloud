@@ -20,13 +20,13 @@
 | Name | Version |
 |------|---------|
 | terraform | >= 1.5.0 |
-| alicloud | ~> 1.262.1 |
+| alicloud | ~> 1.267.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| alicloud | ~> 1.262.1 |
+| alicloud | ~> 1.267.0 |
 
 ## Modules
 
